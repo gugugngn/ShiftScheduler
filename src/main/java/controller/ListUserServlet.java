@@ -26,9 +26,8 @@ public class ListUserServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			// DAO によるデータ取得
-			      UserDao userDao = DaoFactory.createUserDao();
-			      List<User> userList = userDao.findAll();
-			      
+		      UserDao userDao = DaoFactory.createUserDao();
+		      List<User> userList = userDao.findAll();
 			      
 			// JSP へフォワード
 			request.setAttribute("userList", userList); 

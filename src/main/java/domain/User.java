@@ -14,7 +14,11 @@ public class User {
 	private String departmentName;
 	private String positionName;
 	
-	
+	public User() {
+		
+	}
+		
+		
 	
 	public String getDepartmentName() {
 		return departmentName;
@@ -28,12 +32,13 @@ public class User {
 	public void setPositionName(String positionName) {
 		this.positionName = positionName;
 	}
-	public User(Integer id, String name, String departmentName, String positionName, Date created) {
+	public User(Integer id, String name, String departmentName, String positionName, Date created, Date updated) {
 		this.id = id;
 	    this.name = name;
 	    this.departmentName = departmentName;
 	    this.positionName = positionName;
 	    this.created = created;
+	    this.updated = updated;
 	}
 	public Integer getId() {
 		return id;
