@@ -40,6 +40,12 @@ public class User {
 	    this.created = created;
 	    this.updated = updated;
 	}
+	public User(Integer id) {
+		this.id = id;
+	}
+
+
+
 	public Integer getId() {
 		return id;
 	}

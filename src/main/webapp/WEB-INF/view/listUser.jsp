@@ -35,7 +35,12 @@
 						<td><fmt:formatDate value="${user.created}" pattern="yyyy/M/d" /></td>
 						<td><fmt:formatDate value="${user.updated}" pattern="yyyy/M/d" /></td>
 						<td><a href="updateUser?id=<c:out value="${user.id}"/>">更新</a></td>
-						<td><a href="deleteUser?id=<c:out value="${user.id}" />">削除</a></td>
+						<td>
+						  <form action="deleteUser" method="post" >
+						  	<input type="hidden" name="id" value="${user.id}" />
+						    <input type="submit" class="btn btn-danger btn-sm" value="削除">
+						  </form>
+						</td>
 					</tr>
 				</c:forEach>
 			</table>
@@ -45,5 +50,14 @@
 		</div>
 	</div>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.6.1.slim.min.js"></script>
+<script>
+$(document).ready(function() {
+	$("form").submit(function() {
+		return confirm("本当に削除しますか？");
+	});
+});
+</script>
 </body>
 </html>

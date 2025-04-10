@@ -78,8 +78,14 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public void deleteById(User user) throws Exception {
-		// TODO 自動生成されたメソッド・スタブ
-		
+		  try (Connection con = ds.getConnection()) {
+		    String sql = "DELETE FROM users WHERE id = ?";
+		    PreparedStatement stmt = con.prepareStatement(sql);
+		    stmt.setObject(1, user.getId(), Types.INTEGER);
+		    stmt.executeUpdate();
+		  } catch (Exception e) {
+		    throw e;
+		}
 	}
 	
 	/**
