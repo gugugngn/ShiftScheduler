@@ -37,7 +37,8 @@ public class DeleteUserServlet extends HttpServlet {
 			String strId = request.getParameter("id"); 
 			Integer id = Integer.parseInt(strId);
 	        UserDao userDao = DaoFactory.createUserDao();
-	        userDao.deleteById(new User(id)); 
+	        User user = userDao.findById(id);
+	        userDao.deleteById(user); 
 
 	        response.sendRedirect(request.getContextPath() + "/listUser");
 	    } catch (Exception e) {
