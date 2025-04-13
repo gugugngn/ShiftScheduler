@@ -10,7 +10,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dao.DaoFactory;
+import dao.DepartmentDao;
+import dao.PositionDao;
 import dao.UserDao;
+import domain.Department;
+import domain.Position;
 import domain.User;
 
 /**
@@ -26,9 +30,17 @@ public class ListUserServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			// DAO によるデータ取得
-		      UserDao userDao = DaoFactory.createUserDao();
-		      List<User> userList = userDao.findAll();
-			      
+			UserDao userDao = DaoFactory.createUserDao();
+			List<User> userList = userDao.findAll();
+			  
+			DepartmentDao deptDao = DaoFactory.createDepartmentDao();
+			List<Department> departments = deptDao.findAll();
+			request.setAttribute("departments", departments);
+			 
+			PositionDao posDao = DaoFactory.createPositionDao();
+			List<Position> positions = posDao.findAll();
+			request.setAttribute("positions", positions);
+  
 			// JSP へフォワード
 			request.setAttribute("userList", userList); 
 			request.getRequestDispatcher("/WEB-INF/view/listUser.jsp")

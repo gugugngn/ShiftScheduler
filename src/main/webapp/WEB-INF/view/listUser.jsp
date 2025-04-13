@@ -30,8 +30,20 @@
 					<tr>
 						<td><c:out value="${user.id}" /></td>
 						<td><c:out value="${user.name}" /></td>
-						<td><c:out value="${user.departmentName}" /></td>
-						<td><c:out value="${user.positionName}" /></td>
+						<td>
+							<c:forEach items="${departments}" var="dept">
+						      <c:if test="${dept.id == user.departmentId}">
+						        <c:out value="${dept.name}" />
+						      </c:if>
+						    </c:forEach>
+						</td>
+						<td>
+							<c:forEach items="${positions}" var="pos">
+						      <c:if test="${pos.id == user.positionId}">
+						        <c:out value="${pos.name}" />
+						      </c:if>
+						    </c:forEach>
+						</td>
 						<td><fmt:formatDate value="${user.created}" pattern="yyyy/M/d" /></td>
 						<td><fmt:formatDate value="${user.updated}" pattern="yyyy/M/d" /></td>
 						<td><a href="updateUser?id=<c:out value="${user.id}"/>">更新</a></td>
