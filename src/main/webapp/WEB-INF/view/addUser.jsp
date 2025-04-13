@@ -18,14 +18,20 @@
 					<table border="1">
 						<tr>
 							<th>名前</th>
-							<td><input type="text" name="name"
-								value="<c:out value="${name}" />"></td>
+							<td>
+								<c:if test="${not empty nameError}">
+									<p><c:out value="※${nameError}" /></p> 
+								</c:if>
+								<input type="text" name="name" value="<c:out value="${name}" />">
+							</td>
 						</tr>
 						<tr>
 							<th>所属部署</th>
 							<td><select name="departmentId">
 									<c:forEach var="dept" items="${departments}">
-										<option value="${dept.id}">${dept.name}</option>
+										<option value="${dept.id}" <c:if test="${dept.id == departmentId}">selected</c:if>>
+											${dept.name}
+										</option>
 									</c:forEach>
 							</select></td>
 						</tr>
@@ -33,17 +39,29 @@
 							<th>権限種別</th>
 							<td><select name="positionId">
 									<c:forEach var="pos" items="${positions}">
-										<option value="${pos.id}">${pos.name}</option>
+									    <option value="${pos.id}" <c:if test="${pos.id == positionId}">selected</c:if>>
+									        ${pos.name}
+									    </option>
 									</c:forEach>
 							</select></td>
 						</tr>
 						<tr>
 							<th>ログインID</th>
-							<td><input type="text" name="loginId" placeholder="ログインID" required /></td>
+							<td>
+								<c:if test="${not empty loginIdError}">
+									<p><c:out value="※${loginIdError}" /></p> 
+								</c:if>
+								<input type="text" name="loginId" value="<c:out value='${loginId}' />" />
+							</td>
 						</tr>
 						<tr>
 							<th>パスワード</th>
-							<td><input type="password" name="password" placeholder="パスワード" required /></td>
+							<td>
+								<c:if test="${not empty passwordError}">
+									<p><c:out value="※${passwordError}" /></p> 
+								</c:if>
+								<input type="password" name="password"/>
+							</td>
 						</tr>
 					</table>
 

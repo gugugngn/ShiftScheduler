@@ -41,7 +41,6 @@ public class AddUserServlet extends HttpServlet {
 	        
 	        request.setAttribute("departments", departments);
 	        request.setAttribute("positions", positions);
-	        
 	     // フォームの表示 
 			request.getRequestDispatcher("WEB-INF/view/addUser.jsp")
 	        .forward(request, response);
@@ -55,16 +54,62 @@ public class AddUserServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// パラメータの取得
+		// バリデーション用のフラグ
+		boolean isError = false;
+		
+		// パラメータの取得とバリデーション
 		String name = request.getParameter("name");
+		request.setAttribute("name", name);   // 再表示用
+		if (name.isEmpty()) {
+			// エラーメッセージの作成
+			request.setAttribute("nameError", "名前が未入力です。");
+			isError = true;  // 入力に不備ありと判定
+		}
+		
 		String loginId = request.getParameter("loginId");
+		request.setAttribute("loginId", loginId);   // 再表示用
+		if (loginId.isEmpty()) {
+			// エラーメッセージの作成
+			request.setAttribute("loginIdError", "ログインIDが未入力です。");
+			isError = true;  // 入力に不備ありと判定
+		}
+		
 	    String plainPassword = request.getParameter("password");
+	    if (plainPassword == null || plainPassword.isEmpty()) {
+			// エラーメッセージの作成
+			request.setAttribute("passwordError", "パスワードが未入力です。");
+			isError = true;  // 入力に不備ありと判定
+		} 
+	    
 		Integer departmentId = Integer.parseInt(request.getParameter("departmentId"));
 		Integer positionId = Integer.parseInt(request.getParameter("positionId"));
+
+		// 入力に不備がある場合は、フォームを再表示し、処理を中断
+		if (isError == true) {
+			try {
+				DepartmentDao deptDao = DaoFactory.createDepartmentDao();
+			    List<Department> departments = deptDao.findAll();
+			    request.setAttribute("departments", departments);
+				
+	            PositionDao positionDao = DaoFactory.createPositionDao();
+	            List<Position> positions = positionDao.findAll(); 
+	            request.setAttribute("positions", positions);
+
+	            request.setAttribute("departmentId", departmentId);
+	    		request.setAttribute("positionId", positionId);
+
+	            request.getRequestDispatcher("/WEB-INF/view/addUser.jsp").forward(request, response);
+	            return;
+	        } catch (Exception e) {
+	            throw new ServletException(e);
+	        }
+		}
 		
-		//パスワードのハッシュ化
-		String hashedPassword = BCrypt.hashpw(plainPassword, BCrypt.gensalt());
-		
+		// ↑エラーがなかったときだけ↓ハッシュ化
+		 String hashedPassword = BCrypt.hashpw(plainPassword, BCrypt.gensalt());
+		 System.out.println("ハッシュ化されたパスワード: " + hashedPassword);
+
+
 		// データの追加
 		User user = new User();
 		user.setName(name);
