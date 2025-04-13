@@ -32,16 +32,23 @@ public class User {
 	public void setPositionName(String positionName) {
 		this.positionName = positionName;
 	}
-	public User(Integer id, String name, String departmentName, String positionName, Date created, Date updated) {
-		this.id = id;
-	    this.name = name;
-	    this.departmentName = departmentName;
-	    this.positionName = positionName;
-	    this.created = created;
-	    this.updated = updated;
-	}
+
 	public User(Integer id) {
 		this.id = id;
+	}
+
+
+
+	public User(Integer id, String name, String loginId, String loginPass, Integer departmentId,
+			Integer positionId, Date created, Date updated) {
+		this.id = id;
+	    this.name = name;
+	    this.loginId = loginId;
+	    this.loginPass = loginPass;
+	    this.departmentId = departmentId;
+	    this.positionId = positionId;
+	    this.created = created;
+	    this.updated = updated;
 	}
 
 
